@@ -17,34 +17,34 @@ class CatalogueController extends Controller
 {
     public function __construct()
     {
-
+        /*
         $this->middleware('permission:industry')->only('industry');
         $this->middleware('permission:line')->only('line');
         $this->middleware('permission:deposit')->only('deposit');
         $this->middleware('permission:zone')->only('zone');   
-        
+        */
     }
-    public function index(Request $request)
+    public function datatable(Request $request)
     {
-        //Evaluar los permisos para la visibilidad
-        $isUser = auth()->user()->can(['catalogs.edit', 'catalogs.destroy']);
-        //Variable para la visiblidad
+        
+        //$isUser = auth()->user()->can(['catalogs.edit', 'catalogs.destroy']);
         $visibility = "";
-        if (!$isUser) {$visibility="disabled";}
-
+        //if (!$isUser) {$visibility="disabled";}
         return datatables()->of(Catalogue::all()->where('type_catalog_id', $request->type_catalog_id)->where('state','!=','ELIMINADO'))
-        //use para usar varible externa
         ->addColumn('Editar', function ($item) use ($visibility) {
             $item->v=$visibility;
-        return '<a class="btn btn-xs btn-primary text-white '.$item->v.'" onclick="Edit('.$item->id.')" ><i class="icon-pencil"></i></a>';
+        return '<a class="btn btn-primary btn-circle btn-sm text-white '.$item->v.'" onclick="Edit('.$item->id.')" ><i class="fas fa-pen"></i></a>';
         })
         ->addColumn('Eliminar', function ($item) {
-        return '<a class="btn btn-xs btn-danger text-white '.$item->v.'" onclick="Delete(\''.$item->id.'\')"><i class="icon-trash"></i></a>';
+        return '<a class="btn btn-danger btn-circle btn-sm text-white '.$item->v.'" onclick="Delete(\''.$item->id.'\')"><i class="fas fa-trash"></i></a>';
         })
         ->rawColumns(['Editar','Eliminar'])  
         ->toJson();
     }
+    public function index(Request $request)
+    {
 
+    }
     public function store(Request $request)
     {
         $rule = new CatalogueRequest();        
@@ -82,7 +82,6 @@ class CatalogueController extends Controller
             return response()->json(['success'=>true,'msg'=>'Registro actualizado existosamente.']);
         }
     }
-
     public function destroy(Request $request)
     {
         $Catalogue = Catalogue::find($request->id);
@@ -92,21 +91,33 @@ class CatalogueController extends Controller
     }
 
     // Return Views
-    public function line() // linea
+    public function country()
     {
-        return view('catalogs.line');
+        return view('catalogues.country');
     }
-    public function deposit() // almacen
+    public function document_type()
     {
-        return view('catalogs.deposit');
+        return view('catalogues.document_type');
     }
-    public function zone() // departamento
+    public function occupation()
     {
-        return view('catalogs.zone');
+        return view('catalogues.occupation');
     }
-    public function industry() // industrias
+    public function language()
     {
-        return view('catalogs.industry');
+        return view('catalogues.language');
+    }
+    public function tag()
+    {
+        return view('catalogues.tag');
+    }
+    public function transport_type()
+    {
+        return view('catalogues.transport_type');
+    }
+    public function location_type()
+    {
+        return view('catalogues.location_type');
     }
     // lista los catalogos depende del id que pase
     public function list(Request $request)

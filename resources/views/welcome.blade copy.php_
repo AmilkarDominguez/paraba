@@ -67,10 +67,10 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Inicio</a>
+                        <a href="{{ url('/home') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Iniciar Sesión</a>
-                        <!--<a href="{{ route('register') }}">Registrarse</a>-->
+                        <a href="{{ route('register') }}">Registrarse</a>
                     @endauth
                     
                 </div>
@@ -80,7 +80,7 @@
                 <div class="title m-b-md">
                     PARABA
                 </div>
-                <p class="text-center">Sistema de Información Turistica Digital</p>
+                <p class="text-center">Sistema de Almacenamiento Digital Benito 🐱‍👤</p>
             </div>
         </div>
     </body>

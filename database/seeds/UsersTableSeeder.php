@@ -513,68 +513,8 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('bytemo'),
             'remember_token' => str_random(10)            
         ]);
-
-        $lucena = App\User::create([
-            'name' => 'lucena',
-            'email'=> 'lmiranda@miranda.com',
-            'state' => 'ACTIVO',
-            'email_verified_at' => now(),
-            'password' => bcrypt('madison'),
-            'remember_token' => str_random(10)            
-        ]);
-
-        $admin = App\User::create([
-            'name' => 'administrador',
-            'email'=> 'administrador@miranda.com',
-            'state' => 'ACTIVO',
-            'email_verified_at' => now(),
-            'password' => bcrypt('administrador1'),
-            'remember_token' => str_random(10)            
-        ]);
-
-
-        $miranda = App\User::create([
-            'name' => 'administrador visualizador',
-            'email'=> 'rmiranda@miranda.com',
-            'state' => 'ACTIVO',
-            'email_verified_at' => now(),
-            'password' => bcrypt('angelica'),
-            'remember_token' => str_random(10)            
-        ]);
-        ///vendedores y cobradores
-        $seller = App\User::create([
-            'name' => 'vendedor',
-            'email'=> 'vendedores@miranda.com',
-            'state' => 'ACTIVO',
-            'email_verified_at' => now(),
-            'password' => bcrypt('vendedoresmiranda'),
-            'remember_token' => str_random(10)            
-        ]);
         
-        $collectors = App\User::create([
-            'name' => 'cobradores',
-            'email'=> 'cobradores@miranda.com',
-            'state' => 'ACTIVO',
-            'email_verified_at' => now(),
-            'password' => bcrypt('mirandacobradores'),
-            'remember_token' => str_random(10)            
-        ]); 
-
-
-
-
-
-
         //ASIGNACION DE ROLES
         $bytemo->assignRoles('root');
-        $lucena->assignRoles('manager');
-        $admin->assignRoles('manager');
-
-        $miranda->assignRoles('owner');
-
-        $seller->assignRoles('consultant');
-        $collectors->assignRoles('consultant');
-        //$invited->assignRoles('guest');
-
     }
 }

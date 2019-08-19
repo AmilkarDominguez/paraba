@@ -12,49 +12,43 @@ class CatalogTypesTableSeeder extends Seeder
     public function run()
     {
         App\TypeCatalog::create([
-            'name' => 'TIPO',
-            'description' => 'Tipo de Productos.',
+            'name' => 'Pais',
+            'description' => 'Países de Turistas.',
             'state' => 'ACTIVO'
         ]);
         
         App\TypeCatalog::create([
-            'name' => 'ALMACEN',
-            'description' => 'Almacen de Productos.',
+            'name' => 'Tipo documento',
+            'description' => 'Tipos de documento de turistas.',
             'state' => 'ACTIVO'
         ]);
 
         App\TypeCatalog::create([
-            'name' => 'ZONA',
-            'description' => 'Zonas de Bolivia.',
+            'name' => 'Ocupación',
+            'description' => 'Tipos de Ocupación de turistas.',
+            'state' => 'ACTIVO'
+        ]);
+        //Para Contenido (publicaciones)
+        App\TypeCatalog::create([
+            'name' => 'Idioma',
+            'description' => 'Tipos de idiomas para publicaciones.',
             'state' => 'ACTIVO'
         ]);
 
         App\TypeCatalog::create([
-            'name' => 'LINEA',
-            'description' => 'linea de Productos.',
-            'state' => 'ACTIVO'
-        ]);
-
-        App\TypeCatalog::create([
-            'name' => 'TIPO CLIENTE',
-            'description' => 'Tipos de clientes.',
+            'name' => 'Etiqueta',
+            'description' => 'Etiquetas para publicaciones.',
             'state' => 'ACTIVO'
         ]);
         
         App\TypeCatalog::create([
-            'name' => 'INDUSTRIA',
-            'description' => 'Industria de Productos.',
-            'state' => 'ACTIVO'
-        ]);
-        ///// duda son necesarios ???
-        App\TypeCatalog::create([
-            'name' => 'ESTADO PAGO',
-            'description' => 'Estados de pagos.',
+            'name' => 'Tipo transporte',
+            'description' => 'Tipos de transporte.',
             'state' => 'ACTIVO'
         ]);
         App\TypeCatalog::create([
-            'name' => 'TIPO PAGO',
-            'description' => 'Tipo de pago que se utiliza.',
+            'name' => 'Tipo ubicación',
+            'description' => 'Tipos de unbicaciones turisticas.',
             'state' => 'ACTIVO'
         ]);
     }
