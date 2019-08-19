@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTypeCatalogsTable extends Migration
+class CreateCataloguesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,17 @@ class CreateTypeCatalogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_catalogs', function (Blueprint $table) {
+        Schema::create('catalogues', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 128)->unique();
-            $table->mediumText('description')->nullable();
+            $table->unsignedBigInteger('type_catalog_id')->unsigned();// FOREING KEY
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->timestamps();
+            //RELACTIONS
+            $table->foreign('type_catalog_id')->references('id')->on('type_catalogs')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 
@@ -29,6 +34,6 @@ class CreateTypeCatalogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_catalogs');
+        Schema::dropIfExists('catalogues');
     }
 }

@@ -19,9 +19,29 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->rememberToken();
             $table->timestamps();
+            //CUSTOM
+            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
+            $table->enum('gender', ['MASCULINO', 'FEMENINO'])->default('MASCULINO');
+            $table->string('photo')->nullable();
+            $table->unsignedBigInteger('country_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('document_type_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('occupation_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('language_id')->unsigned()->nullable();
+            //RELATIONS
+            $table->foreign('country_id')->references('id')->on('catalogues')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            $table->foreign('document_type_id')->references('id')->on('catalogues')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            $table->foreign('occupation_id')->references('id')->on('catalogues')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            $table->foreign('language_id')->references('id')->on('catalogues')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 
