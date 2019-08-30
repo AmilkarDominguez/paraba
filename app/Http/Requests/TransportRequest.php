@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProviderRequest extends FormRequest
+class TransportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,10 @@ class ProviderRequest extends FormRequest
         return [
             'name'            => 'required|string|max:255',
             'state'           => 'required|string|max:255',
-            'catalog_zone_id' => 'required|integer',
+            'transport_type_id' => 'required|integer',
+            'language_id' => 'required|integer',
+            'image'           => 'required|string',
+            'extension_image' => 'required|string',
         ];
     }
 }

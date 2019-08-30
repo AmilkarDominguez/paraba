@@ -21,7 +21,6 @@ class CreateLocationsTable extends Migration
             $table->text('description')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
-            $table->string('qr_code')->nullable();
             $table->string('coordinates')->nullable();
             $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->unsignedBigInteger('location_type_id')->unsigned()->nullable();

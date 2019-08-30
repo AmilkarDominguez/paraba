@@ -26,11 +26,10 @@ class CatalogueController extends Controller
     }
     public function datatable(Request $request)
     {
-        
         //$isUser = auth()->user()->can(['catalogs.edit', 'catalogs.destroy']);
         $visibility = "";
         //if (!$isUser) {$visibility="disabled";}
-        return datatables()->of(Catalogue::all()->where('type_catalog_id', $request->type_catalog_id)->where('state','!=','ELIMINADO'))
+        return datatables()->of(Catalogue::all()->where('type_catalogue_id', $request->type_catalogue_id)->where('state','!=','ELIMINADO'))
         ->addColumn('Editar', function ($item) use ($visibility) {
             $item->v=$visibility;
         return '<a class="btn btn-primary btn-circle btn-sm text-white '.$item->v.'" onclick="Edit('.$item->id.')" ><i class="fas fa-pen"></i></a>';
@@ -124,9 +123,9 @@ class CatalogueController extends Controller
     {
         switch ($request->by)
         {
-            case 'type_catalog_id':
+            case 'type_catalogue_id':
                 $list=Catalogue::All()
-                ->where('type_catalog_id',$request->type_catalog_id)
+                ->where('type_catalogue_id',$request->type_catalogue_id)
                 ->where('state','ACTIVO');
                 return $list;
             break;

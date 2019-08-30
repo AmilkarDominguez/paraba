@@ -15,13 +15,13 @@ class CreateCataloguesTable extends Migration
     {
         Schema::create('catalogues', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('type_catalog_id')->unsigned();// FOREING KEY
+            $table->unsignedBigInteger('type_catalogue_id')->unsigned();// FOREING KEY
             $table->string('name');
             $table->text('description')->nullable();
             $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->timestamps();
             //RELACTIONS
-            $table->foreign('type_catalog_id')->references('id')->on('type_catalogs')
+            $table->foreign('type_catalogue_id')->references('id')->on('type_catalogues')
             ->onDelete('cascade')
             ->onUpdate('cascade');
         });

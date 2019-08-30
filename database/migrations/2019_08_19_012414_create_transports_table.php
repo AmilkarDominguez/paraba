@@ -21,7 +21,6 @@ class CreateTransportsTable extends Migration
             $table->mediumText('description')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
-            $table->string('qr_code')->nullable();
             $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->unsignedBigInteger('transport_type_id')->unsigned()->nullable();
             $table->unsignedBigInteger('language_id')->unsigned()->nullable();

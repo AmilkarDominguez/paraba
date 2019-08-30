@@ -26,7 +26,7 @@ class CatalogueRequest extends FormRequest
         return [
             'name'            => 'required|string|max:255',
             'state'           => 'required|string|max:255',
-            'type_catalog_id' => 'required|integer',
+            'type_catalogue_id' => 'required|integer',
         ];
     }
 }

@@ -1,8 +1,9 @@
 var table;
 var id = 0;
-var type_catalogue_id = 1;
 $(document).ready(function () {
     ListDatatable();
+    SelectLanguage();
+    SelectType();
     catch_parameters();
 });
 // datatable catalogos
@@ -16,13 +17,22 @@ function ListDatatable() {
             "url": "/js/assets/Spanish.json"
         },
         ajax: {
-            url: 'catalogues_datatable',
-            data: function (obj) {
-                obj.type_catalogue_id = type_catalogue_id;
-            }
+            url: 'transports_datatable'
         },
-        columns: [{
+        columns: [
+            /*
+                <td>Nombre</td>
+                <td>Descripción</td>
+                <td>Estado</td>
+                <td>Detalles</td>
+                <td>Editar</td>
+                <td>Eliminar</td>
+            */
+            {
                 data: 'name'
+            },
+            {
+                data: 'description'
             },
             {
                 data: 'state',
@@ -37,7 +47,9 @@ function ListDatatable() {
                 }
             },
             {
-                data: 'description'
+                data: 'Detalles',
+                orderable: false,
+                searchable: false
             },
             {
                 data: 'Editar',
@@ -95,21 +107,83 @@ function ListDatatable() {
         ],
     });
 };
+function SelectLanguage() {
+    $.ajax({
+        url: "list_catalogue",
+        method: 'get',
+        data: {
+            by: "type_catalogue_id",
+            type_catalogue_id: 4
+        },
+        success: function (result) {
+            var code = '<div class="form-group">';
+            code += '<label><b>Idioma:</b></label>';
+            code += '<select class="form-control rounded" name="language_id" id="language_id" required>';
+            code += '<option disabled value="" selected>(Seleccionar)</option>';
+            $.each(result, function (key, value) {
+                code += '<option value="' + value.id + '">' + value.name + '</option>';
+            });
+            code += '</select>';
+            code += '<div class="invalid-feedback">';
+            code += 'Dato necesario.';
+            code += '</div>';
+            code += '</div>';
+            $("#select_language").html(code);
+        },
+        error: function (result) {
+            toastr.error(result.msg +' CONTACTE A SU PROVEEDOR POR FAVOR.');
+            //console.log(result);
+        },
+
+    });
+}
+function SelectType() {
+    $.ajax({
+        url: "list_catalogue",
+        method: 'get',
+        data: {
+            by: "type_catalogue_id",
+            type_catalogue_id: 6
+        },
+        success: function (result) {
+            var code = '<div class="form-group">';
+            code += '<label><b>Tipo de Transporte:</b></label>';
+            code += '<select class="form-control rounded" name="transport_type_id" id="transport_type_id" required>';
+            code += '<option disabled value="" selected>(Seleccionar)</option>';
+            $.each(result, function (key, value) {
+                code += '<option value="' + value.id + '">' + value.name + '</option>';
+            });
+            code += '</select>';
+            code += '<div class="invalid-feedback">';
+            code += 'Dato necesario.';
+            code += '</div>';
+            code += '</div>';
+            $("#select_type").html(code);
+        },
+        error: function (result) {
+            toastr.error(result.msg +' CONTACTE A SU PROVEEDOR POR FAVOR.');
+            //console.log(result);
+        },
+
+    });
+}
 
 // guarda los datos nuevos
 function Save() {
+    //console.log(catch_parameters());
     $.ajax({
-        url: "catalogues",
+        url: "transports",
         method: 'post',
         data: catch_parameters(),
         success: function (result) {
             if (result.success) {
                 VanillaToasts.create({text: result.msg,type: 'success',timeout: 5000});
                 Push.create(result.msg);
-
+                console.log(result.msg);
             } else {
                 VanillaToasts.create({text: result.msg,type: 'warning',timeout: 5000});
                 Push.create(result.msg);
+                console.log(result.msg);
             }
         },
         error: function (result) {
@@ -124,12 +198,13 @@ function Save() {
 // captura los datos
 function Edit(id) {
     $.ajax({
-        url: "catalogues/{catalog}/edit",
+        url: "transports/{transport}/edit",
         method: 'get',
         data: {
             id: id
         },
         success: function (result) {
+            //console.log(result);
             show_data(result);
         },
         error: function (result) {
@@ -150,7 +225,10 @@ function show_data(obj) {
     id = obj.id;
     $("#name").val(obj.name);
     $("#description").val(obj.description);
-    $("#type_catalogue_id").val(obj.type_catalogue_id);
+    $('#image').attr('src', obj.photo);
+    $("#link").val(obj.link);
+    $("#transport_type_id").val(obj.transport_type_id);
+    $("#language_id").val(obj.language_id);
     if (obj.state == "ACTIVO") {
         $('#estado_activo').prop('checked', true);
     }
@@ -158,18 +236,17 @@ function show_data(obj) {
         $('#estado_inactivo').prop('checked', true);
     }
     $("#title-modal").html("Editar Registro");
-
-    data_old = $(".form-data").serialize();
+    data_old = catch_parameters();
 
     $('#modal_datos').modal('show');
 };
 
 // actualiza los datos
 function Update() {
-    var data_new = $(".form-data").serialize();
+    var data_new = catch_parameters();
     if (data_old != data_new) {
         $.ajax({
-            url: "catalogues/{catalog}",
+            url: "transports/{catalog}",
             method: 'put',
             data: catch_parameters(),
             success: function (result) {
@@ -200,7 +277,7 @@ function Delete(id_) {
 }
 $("#btn_delete").click(function () {
     $.ajax({
-        url: "catalogues/{catalog}",
+        url: "transports/{catalog}",
         method: 'delete',
         data: {
             id: id
@@ -238,7 +315,8 @@ function Mayus(e) {
 function catch_parameters() {
     var data = $(".form-data").serialize();
     data += "&id=" + id;
-    data += "&type_catalogue_id=" + type_catalogue_id;
+    data += "&extension_image=" + extension_image;
+    data +="&image=" + reader.result;
     return data;
 }
 
@@ -276,7 +354,7 @@ $("#btn-agregar").click(function () {
     }, false);
 })();
 
-/// limpi campos despues de utilizar el modal
+//limpiar campos despues de utilizar el modal
 function ClearInputs() {
     var forms = document.getElementsByClassName('form-data');
     Array.prototype.filter.call(forms, function (form) {
@@ -286,3 +364,23 @@ function ClearInputs() {
     $("#form-data")[0].reset();
     id = 0;
 };
+
+//Metodos para imagen
+var reader = new FileReader();
+var extension_image = "";
+$("#photo").change(function (e) {
+    ImgPreview(this);
+    $fileName = e.target.files[0].name;
+    extension_image = $fileName.replace(/^.*\./, '');
+    $('#label_image').html($fileName);
+    //console.log(extension_image);
+});
+function ImgPreview(input) {
+    if (input.files && input.files[0]) {
+        reader.onload = function (e) {
+            //console.log(e);
+            $('#image').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}

@@ -45,13 +45,13 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Catálogos:</h6>
             <a class="collapse-item" href="{{ route('country') }}">Países</a>
-            <a class="collapse-item" href="{{ route('document_type') }}"">Tipos de Documento</a>
-            <a class="collapse-item" href="{{ route('occupation') }}"">Ocupaciones</a>
-            <a class="collapse-item" href="{{ route('language') }}"">Idiomas</a>
+            <a class="collapse-item" href="{{ route('document_type') }}">Tipos de Documento</a>
+            <a class="collapse-item" href="{{ route('occupation') }}">Ocupaciones</a>
+            <a class="collapse-item" href="{{ route('language') }}">Idiomas</a>
             <hr class="sidebar-divider">
-            <a class="collapse-item" href="{{ route('tag') }}"">Etiquetas</a>
-            <a class="collapse-item" href="{{ route('transport_type') }}"">Tipos de Transporte</a>
-            <a class="collapse-item" href="{{ route('location_type') }}"">Tipos de Ubicación</a>
+            <a class="collapse-item" href="{{ route('tag') }}">Etiquetas</a>
+            <a class="collapse-item" href="{{ route('transport_type') }}">Tipos de Transporte</a>
+            <a class="collapse-item" href="{{ route('location_type') }}">Tipos de Ubicación</a>
           </div>
         </div>
       </li>
@@ -84,7 +84,7 @@
         <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Árticulos:</h6>
-            <a class="collapse-item" href="#">Trasnporte</a>
+            <a class="collapse-item" href="{{ route('transports.index') }}">Transporte</a>
             <a class="collapse-item" href="#">Sitios Turitisticos</a>
             <a class="collapse-item" href="#">Anuncios</a>
           </div>

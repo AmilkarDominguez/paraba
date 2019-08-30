@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title_dashboard')
-<h1 class="h3 mb-0 text-gray-800">Idiomas</h1>
+<h1 class="h3 mb-0 text-gray-800">Transportes</h1>
 @endsection
 @section('content')
 <div class="d-sm-flex align-items-left justify-content-between mb-4">
@@ -20,8 +20,9 @@
                 <thead>
                     <tr>
                         <td>Nombre</td>
-                        <td>Estado</td>
                         <td>Descripción</td>
+                        <td>Estado</td>
+                        <td>Detalles</td>
                         <td>Editar</td>
                         <td>Eliminar</td>
                     </tr>
@@ -52,13 +53,31 @@
                                 <div class="invalid-feedback">
                                     Dato necesario.
                                 </div>
-                            </div>  
-                            
+                            </div>   
                             <div class="md-form mb-3">
                                 <label for="nombre"><b>Descripción:</b></label>
-                                <textarea  type="text" class="form-control rounded" onkeyup="Mayus(this);" rows="4" id="description" name="description" placeholder="Descripción" ></textarea>  
+                                <textarea  type="text" class="form-control rounded" onkeyup="Mayus(this);" rows="4" id="description" name="description" placeholder="Descripción"></textarea>  
                             </div> 
-                            
+                            <div class="md-form mb-3">
+                                <label for="nombre"><b>Enlace:</b></label>
+                                <input type="text" class="form-control rounded" onkeyup="Mayus(this);" id="link" name="link" placeholder="Enlace">
+                            </div> 
+                            <div class="md-form mb-3">
+                                <label><b>Imagen:</b></label>
+                                <div class="row">
+                                    <div class="col-md-4 text-center">
+                                        <img src="" id="image" alt="image" class="img-thumbnail">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="custom-file">
+                                            <input type="file" class="form-control custom-file-input" id="photo" name="photo" lang="es" accept=".png,.jpg,.gif">
+                                            <label id="label_image" class="custom-file-label rounded">Elegir archivo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md-form mb-3" id="select_type"></div>
+                            <div class="md-form mb-3" id="select_language"></div>  
                             <div class="md-form mb-3">
                                     <label for="state"><b>Estado:</b></label>
                                 <div class="custom-control custom-radio">
@@ -108,9 +127,8 @@
 
 @endsection
 @section('scripts')
-<script src="{{ URL::asset('js/scripts/catalogues.js') }}"></script>
+<script src="{{ URL::asset('js/scripts/transports.js') }}"></script>
 <script>
-type_catalogue_id=4;
-title_modal_data="Idiomas";
+title_modal_data="Transportes";
 </script>
 @endsection

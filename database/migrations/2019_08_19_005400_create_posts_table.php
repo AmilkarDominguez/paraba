@@ -20,7 +20,6 @@ class CreatePostsTable extends Migration
             $table->string('title')->nullable();
             $table->text('content')->nullable();
             $table->string('photo')->nullable();
-            $table->string('qr_code')->nullable();
             $table->text('link')->nullable();
             $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->unsignedBigInteger('tag_id')->unsigned()->nullable();

@@ -56,7 +56,7 @@
                             
                             <div class="md-form mb-3">
                                 <label for="nombre"><b>Descripción:</b></label>
-                                <textarea  type="text" class="form-control rounded" onkeyup="Mayus(this);" rows="4" id="description" name="description" ></textarea>  
+                                <textarea  type="text" class="form-control rounded" onkeyup="Mayus(this);" rows="4" id="description" name="description" placeholder="Descripción" ></textarea>  
                             </div> 
                             
                             <div class="md-form mb-3">
@@ -110,7 +110,7 @@
 @section('scripts')
 <script src="{{ URL::asset('js/scripts/catalogues.js') }}"></script>
 <script>
-type_catalog_id=2;
+type_catalogue_id=2;
 title_modal_data="Tipos de documento";
 </script>
 @endsection
