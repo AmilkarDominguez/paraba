@@ -20,11 +20,11 @@
   <!-- Custom Style by Amilkar -->
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
-<body id="page-top">
+<body id="page-top" class="sidebar-toggled">
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-info sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-info sidebar sidebar-dark accordion toggled" id="accordionSidebar">
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -83,6 +83,9 @@
         </a>
         <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Herramientas:</h6>
+              <a class="collapse-item" href="https://www.google.com/maps/d/u/0/" target="_blank">Google My Maps</a>
+            <hr class="sidebar-divider">
             <h6 class="collapse-header">Árticulos:</h6>
             <a class="collapse-item" href="{{ route('transports.index') }}">Transporte</a>
             <a class="collapse-item" href="#">Sitios Turitisticos</a>

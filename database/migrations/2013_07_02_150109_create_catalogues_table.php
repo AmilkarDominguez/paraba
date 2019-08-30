@@ -15,10 +15,10 @@ class CreateCataloguesTable extends Migration
     {
         Schema::create('catalogues', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->unsignedBigInteger('type_catalogue_id')->unsigned();// FOREING KEY
             $table->string('name');
             $table->text('description')->nullable();
-            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->timestamps();
             //RELACTIONS
             $table->foreign('type_catalogue_id')->references('id')->on('type_catalogues')

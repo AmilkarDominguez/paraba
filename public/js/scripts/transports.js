@@ -19,20 +19,22 @@ function ListDatatable() {
         ajax: {
             url: 'transports_datatable'
         },
-        columns: [
-            /*
-                <td>Nombre</td>
-                <td>Descripción</td>
-                <td>Estado</td>
-                <td>Detalles</td>
-                <td>Editar</td>
-                <td>Eliminar</td>
-            */
+        columns: [{
+                data: 'Imagen',
+                orderable: false,
+                searchable: false
+            },
             {
                 data: 'name'
             },
             {
                 data: 'description'
+            },
+            {
+                data: 'transport_type.name'
+            },
+            {
+                data: 'language.name'
             },
             {
                 data: 'state',
@@ -47,7 +49,7 @@ function ListDatatable() {
                 }
             },
             {
-                data: 'Detalles',
+                data: 'Ruta',
                 orderable: false,
                 searchable: false
             },
@@ -74,7 +76,7 @@ function ListDatatable() {
                 titleAttr: 'Excel',
                 extend: 'excel',
                 exportOptions: {
-                    columns: [0, 1, 2]
+                    columns: [ 1, 2,3,4,5]
                 }
             },
             {
@@ -83,7 +85,7 @@ function ListDatatable() {
                 titleAttr: 'PDF',
                 extend: 'pdf',
                 exportOptions: {
-                    columns: [0, 1, 2]
+                    columns: [1, 2, 3, 4, 5]
                 }
             },
             {
@@ -93,7 +95,7 @@ function ListDatatable() {
                 extend: 'print',
                 messageTop: '<i class="fas fa-print"></i>',
                 exportOptions: {
-                    columns: [0, 2]
+                    columns: [1, 2,3,4,5]
                 }
             },
             //btn Refresh
@@ -107,6 +109,7 @@ function ListDatatable() {
         ],
     });
 };
+
 function SelectLanguage() {
     $.ajax({
         url: "list_catalogue",
@@ -131,7 +134,7 @@ function SelectLanguage() {
             $("#select_language").html(code);
         },
         error: function (result) {
-            toastr.error(result.msg +' CONTACTE A SU PROVEEDOR POR FAVOR.');
+            toastr.error(result.msg + ' CONTACTE A SU PROVEEDOR POR FAVOR.');
             //console.log(result);
         },
 
@@ -161,7 +164,7 @@ function SelectType() {
             $("#select_type").html(code);
         },
         error: function (result) {
-            toastr.error(result.msg +' CONTACTE A SU PROVEEDOR POR FAVOR.');
+            toastr.error(result.msg + ' CONTACTE A SU PROVEEDOR POR FAVOR.');
             //console.log(result);
         },
 
@@ -177,17 +180,29 @@ function Save() {
         data: catch_parameters(),
         success: function (result) {
             if (result.success) {
-                VanillaToasts.create({text: result.msg,type: 'success',timeout: 5000});
+                VanillaToasts.create({
+                    text: result.msg,
+                    type: 'success',
+                    timeout: 5000
+                });
                 Push.create(result.msg);
                 console.log(result.msg);
             } else {
-                VanillaToasts.create({text: result.msg,type: 'warning',timeout: 5000});
+                VanillaToasts.create({
+                    text: result.msg,
+                    type: 'warning',
+                    timeout: 5000
+                });
                 Push.create(result.msg);
                 console.log(result.msg);
             }
         },
         error: function (result) {
-            VanillaToasts.create({text: result.responseJSON.message,type: 'error',timeout: 5000});
+            VanillaToasts.create({
+                text: result.responseJSON.message,
+                type: 'error',
+                timeout: 5000
+            });
             Push.create(result.responseJSON.message);
             console.log(result);
         },
@@ -208,7 +223,11 @@ function Edit(id) {
             show_data(result);
         },
         error: function (result) {
-            VanillaToasts.create({text: result.responseJSON.message,type: 'error',timeout: 5000});
+            VanillaToasts.create({
+                text: result.responseJSON.message,
+                type: 'error',
+                timeout: 5000
+            });
             Push.create(result.responseJSON.message);
             console.log(result);
         },
@@ -226,6 +245,7 @@ function show_data(obj) {
     $("#name").val(obj.name);
     $("#description").val(obj.description);
     $('#image').attr('src', obj.photo);
+    $('#label_image').html(obj.photo);
     $("#link").val(obj.link);
     $("#transport_type_id").val(obj.transport_type_id);
     $("#language_id").val(obj.language_id);
@@ -246,21 +266,33 @@ function Update() {
     var data_new = catch_parameters();
     if (data_old != data_new) {
         $.ajax({
-            url: "transports/{catalog}",
+            url: "transports/{transport}",
             method: 'put',
             data: catch_parameters(),
             success: function (result) {
                 if (result.success) {
-                    VanillaToasts.create({text: result.msg,type: 'success',timeout: 5000});
+                    VanillaToasts.create({
+                        text: result.msg,
+                        type: 'success',
+                        timeout: 5000
+                    });
                     Push.create(result.msg);
 
                 } else {
-                    VanillaToasts.create({text: result.msg,type: 'warning',timeout: 5000});
+                    VanillaToasts.create({
+                        text: result.msg,
+                        type: 'warning',
+                        timeout: 5000
+                    });
                     Push.create(result.msg);
                 }
             },
             error: function (result) {
-                VanillaToasts.create({text: 'CONTACTE AL ADMINISTRADOR.',type: 'error',timeout: 5000});
+                VanillaToasts.create({
+                    text: 'CONTACTE AL ADMINISTRADOR.',
+                    type: 'error',
+                    timeout: 5000
+                });
                 Push.create(result.responseJSON.message);
                 console.log(result);
             },
@@ -277,23 +309,35 @@ function Delete(id_) {
 }
 $("#btn_delete").click(function () {
     $.ajax({
-        url: "transports/{catalog}",
+        url: "transports/{transport}",
         method: 'delete',
         data: {
             id: id
         },
         success: function (result) {
             if (result.success) {
-                toastr.success(result.msg, {
-                    "closeButton": true
+                VanillaToasts.create({
+                    text: result.msg,
+                    type: 'success',
+                    timeout: 5000
                 });
+                Push.create(result.msg);
+
             } else {
-                VanillaToasts.create({text: result.msg,type: 'warning',timeout: 5000});
+                VanillaToasts.create({
+                    text: result.msg,
+                    type: 'warning',
+                    timeout: 5000
+                });
                 Push.create(result.msg);
             }
         },
         error: function (result) {
-            VanillaToasts.create({text: result.responseText,type: 'error',timeout: 5000});
+            VanillaToasts.create({
+                text: result.responseText,
+                type: 'error',
+                timeout: 5000
+            });
             Push.create(result.responseJSON.message);
             console.log(result);
         },
@@ -316,7 +360,7 @@ function catch_parameters() {
     var data = $(".form-data").serialize();
     data += "&id=" + id;
     data += "&extension_image=" + extension_image;
-    data +="&image=" + reader.result;
+    data += "&image=" + reader.result;
     return data;
 }
 
@@ -375,6 +419,7 @@ $("#photo").change(function (e) {
     $('#label_image').html($fileName);
     //console.log(extension_image);
 });
+
 function ImgPreview(input) {
     if (input.files && input.files[0]) {
         reader.onload = function (e) {

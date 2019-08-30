@@ -46,7 +46,7 @@
                 <div class="modal-body">
                         <div class="modal-body">
                             <div class="md-form mb-3">
-                                <label for="nombre"><b>Nombre:</b></label>
+                                <label><b>Nombre:</b></label>
                                 <input type="text" class="form-control rounded" onkeyup="Mayus(this);" id="name" name="name" placeholder="Nombre"
                                     required>
                                 <div class="invalid-feedback">
@@ -55,7 +55,7 @@
                             </div>  
                             
                             <div class="md-form mb-3">
-                                <label for="nombre"><b>Descripción:</b></label>
+                                <label><b>Descripción:</b></label>
                                 <textarea  type="text" class="form-control rounded" onkeyup="Mayus(this);" rows="4" id="description" name="description" placeholder="Descripción" ></textarea>  
                             </div> 
                             

@@ -27,10 +27,13 @@ class TransportController extends Controller
         //$isUser = auth()->user()->can(['catalogs.edit', 'catalogs.destroy']);
         $visibility = "";
         //if (!$isUser) {$visibility="disabled";}
-        return datatables()->of(Transport::all()->where('state','!=','ELIMINADO'))
-        ->addColumn('Detalles', function ($item) use ($visibility) {
+        return datatables()->of(Transport::where('state','!=','ELIMINADO')->with('transport_type','language')->get())
+        ->addColumn('Imagen', function ($item) use ($visibility) {
             $item->v=$visibility;
-        return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="Details('.$item->id.')" ><i class="fas fa-list-alt"></i></a>';
+        return '<img src="'.$item->photo.'" alt="image" width="125px" onclick="window.open(\''.$item->photo.'\');"></img>';
+        })
+        ->addColumn('Ruta', function ($item) {
+        return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="window.open(\''.$item->link.'\');"><i class="fas fa-route"></i></a>';
         })
         ->addColumn('Editar', function ($item) {
             return '<a class="btn btn-primary btn-circle btn-sm text-white '.$item->v.'" onclick="Edit(\''.$item->id.'\')"><i class="fas fa-pen"></i></a>';
@@ -38,7 +41,7 @@ class TransportController extends Controller
         ->addColumn('Eliminar', function ($item) {
         return '<a class="btn btn-danger btn-circle btn-sm text-white '.$item->v.'" onclick="Delete(\''.$item->id.'\')"><i class="fas fa-trash"></i></a>';
         })
-        ->rawColumns(['Detalles','Editar','Eliminar'])  
+        ->rawColumns(['Imagen','Ruta','Detalles','Editar','Eliminar'])  
         ->toJson();
     }
     public function store(Request $request)
@@ -54,85 +57,82 @@ class TransportController extends Controller
             //IMAGE 
             if($request->image){
                 $image = $request->image;
-                switch ($request->extension_image) {
-                    case 'jpg':
-                        $image = str_replace('data:image/jpeg;base64,', '', $image);
-                        $image = str_replace(' ', '+', $image);
-                        $imageURL = '/images/transports/'.str_random(10).$transport->id.'.jpg';
-                        Storage::disk('public')->put($imageURL,  base64_decode($image));
-                        $transport->photo = $imageURL;
-                        $transport->save();
-                        return response()->json(['success'=>true,'msg'=>'Registro existoso']);
-                        break;
-                    case 'png':
-                        $image = str_replace('data:image/png;base64,', '', $image);
-                        $image = str_replace(' ', '+', $image);
-                        $imageURL = '/images/transports/'.str_random(10).$transport->id.'.png';
-                        Storage::disk('public')->put($imageURL,  base64_decode($image));
-                        $transport->photo = $imageURL;
-                        $transport->save();
-                        return response()->json(['success'=>true,'msg'=>'Registro existoso']);
-                        break;
-                    case 'gif':
-                        $image = str_replace('data:image/gif;base64,', '', $image);
-                        $image = str_replace(' ', '+', $image);
-                        $imageURL = '/images/transports/'.str_random(10).$transport->id.'.gif';
-                        Storage::disk('public')->put($imageURL,  base64_decode($image));
-                        $transport->photo = $imageURL;
-                        $transport->save();
-                        return response()->json(['success'=>true,'msg'=>'Registro existoso']);
-                        break;                        
-                    default:
-                        return response()->json(['success'=>false,'msg'=>'Registro existoso, imágen no aceptada solo esta permitido imágenes JPG, GIF ó PNG.']);
-                        break;
-                }
+                $this->SaveFile($transport,$request->image, $request->extension_image, '/images/Transports/');
             }
             return response()->json(['success'=>true,'msg'=>'Registro existoso.']);
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Transport  $transport
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Transport $transport)
+    public function update(Request $request)
     {
-        //
-    }
+        $rule = new TransportRequest();        
+        $validator = Validator::make($request->all(), $rule->rules());
+        if ($validator->fails())
+        {
+            return response()->json(['success'=>false,'msg'=>$validator->errors()->all()]);
+        } 
+        else{
+            $transport = Transport::find($request->id);
+            $transport->update($request->all());
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Transport  $transport
-     * @return \Illuminate\Http\Response
-     */
+            if($request->image&&$request->extension_image){
+                //Delete File
+                Storage::disk('public')->delete($transport->photo);
+                $this->SaveFile($transport,$request->image, $request->extension_image, '/images/Transports/');
+            }
+            return response()->json(['success'=>true,'msg'=>'Se actualizo existosamente.']);
+        }
+    }
+    public function SaveFile($obj,$code, $extension_file, $path)
+    {
+        $image = $code;
+        switch ($extension_file) {
+            case 'png':            
+                $image = str_replace('data:image/png;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $imageURL = $path.str_random(10).$obj->id.'.png';
+                Storage::disk('public')->put($imageURL,  base64_decode($image));
+                $obj->photo = $imageURL;
+                $obj->save();
+                return response()->json(['success'=>true,'msg'=>'Registro existoso']);
+                break;
+            case 'jpg':            
+                $image = str_replace('data:image/jpeg;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $imageURL = $path.str_random(10).$obj->id.'.jpg';
+                Storage::disk('public')->put($imageURL,  base64_decode($image));
+                $obj->photo = $imageURL;
+                $obj->save();
+                return response()->json(['success'=>true,'msg'=>'Registro existoso']);
+                break;
+            case 'gif':
+                $image = str_replace('data:image/gif;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $imageURL = $path.str_random(10).$obj->id.'.gif';
+                Storage::disk('public')->put($imageURL,  base64_decode($image));
+                $obj->photo = $imageURL;
+                $obj->save();
+                return response()->json(['success'=>true,'msg'=>'Registro existoso']);
+                break;                                                
+            default:
+                return response()->json(['success'=>false,'msg'=>'Registro existoso, tipo de archivo incompatible.']);
+                break;
+        }
+    }
+    public function destroy(Request $request)
+    {
+        $Transport = Transport::find($request->id);
+        $Transport->state = "ELIMINADO";
+        $Transport->update();
+        return response()->json(['success'=>true,'msg'=>'Registro borrado.']);
+    }
+    public function show($id)
+    {
+        $Transport = Transport::find($id);
+        return $Transport->toJson();
+    }
     public function edit(Request $request)
     {
-        return Transport::find($request->id)->toJson();
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Transport  $transport
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Transport $transport)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Transport  $transport
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Transport $transport)
-    {
-        //
-    }
+        $Transport = Transport::find($request->id);
+        return $Transport->toJson();
+    }  
 }

@@ -15,15 +15,15 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             //CUSTOM
             $table->string('title')->nullable();
             $table->text('content')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
-            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->unsignedBigInteger('tag_id')->unsigned()->nullable();
             $table->unsignedBigInteger('language_id')->unsigned()->nullable();
+            $table->timestamps();
             //RELATIONS
             $table->foreign('tag_id')->references('id')->on('catalogues')
             ->onDelete('cascade')

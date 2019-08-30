@@ -15,13 +15,13 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             //CUSTOM
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
-            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
+            $table->timestamps();
         });
     }
 

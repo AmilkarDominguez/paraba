@@ -15,16 +15,16 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             //CUSTOM
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
             $table->string('coordinates')->nullable();
-            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->unsignedBigInteger('location_type_id')->unsigned()->nullable();
             $table->unsignedBigInteger('language_id')->unsigned()->nullable();
+            $table->timestamps();
             //RELATIONS
             $table->foreign('location_type_id')->references('id')->on('catalogues')
             ->onDelete('cascade')

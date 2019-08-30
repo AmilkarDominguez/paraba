@@ -15,9 +15,9 @@ class CreateTypeCataloguesTable extends Migration
     {
         Schema::create('type_catalogues', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->string('name', 128)->unique();
             $table->text('description')->nullable();
-            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->timestamps();
         });
     }

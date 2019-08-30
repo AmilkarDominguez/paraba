@@ -19,10 +19,13 @@
             <table id="table" class="table table-striped ">
                 <thead>
                     <tr>
+                        <td>Imágen</td>
                         <td>Nombre</td>
                         <td>Descripción</td>
+                        <td>Tipo de Transporte</td>
+                        <td>Idioma</td>
                         <td>Estado</td>
-                        <td>Detalles</td>
+                        <td>Ruta</td>
                         <td>Editar</td>
                         <td>Eliminar</td>
                     </tr>
@@ -47,7 +50,7 @@
                 <div class="modal-body">
                         <div class="modal-body">
                             <div class="md-form mb-3">
-                                <label for="nombre"><b>Nombre:</b></label>
+                                <label><b>Nombre:</b></label>
                                 <input type="text" class="form-control rounded" onkeyup="Mayus(this);" id="name" name="name" placeholder="Nombre"
                                     required>
                                 <div class="invalid-feedback">
@@ -55,12 +58,12 @@
                                 </div>
                             </div>   
                             <div class="md-form mb-3">
-                                <label for="nombre"><b>Descripción:</b></label>
-                                <textarea  type="text" class="form-control rounded" onkeyup="Mayus(this);" rows="4" id="description" name="description" placeholder="Descripción"></textarea>  
+                                <label><b>Descripción:</b></label>
+                                <textarea  type="text" class="form-control rounded" rows="4" id="description" name="description" placeholder="Descripción"></textarea>  
                             </div> 
                             <div class="md-form mb-3">
-                                <label for="nombre"><b>Enlace:</b></label>
-                                <input type="text" class="form-control rounded" onkeyup="Mayus(this);" id="link" name="link" placeholder="Enlace">
+                                <label><b>Enlace:</b></label>
+                                <input type="text" class="form-control rounded" id="link" name="link" placeholder="Enlace">
                             </div> 
                             <div class="md-form mb-3">
                                 <label><b>Imagen:</b></label>

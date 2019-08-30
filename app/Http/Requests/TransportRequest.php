@@ -28,8 +28,6 @@ class TransportRequest extends FormRequest
             'state'           => 'required|string|max:255',
             'transport_type_id' => 'required|integer',
             'language_id' => 'required|integer',
-            'image'           => 'required|string',
-            'extension_image' => 'required|string',
         ];
     }
 }

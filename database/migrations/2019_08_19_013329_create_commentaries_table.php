@@ -15,13 +15,13 @@ class CreateCommentariesTable extends Migration
     {
         Schema::create('commentaries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             //CUSTOM
             $table->text('commentary')->nullable();
             $table->integer('score')->nullable();
-            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->unsignedBigInteger('user_id')->unsigned()->nullable();
             $table->unsignedBigInteger('location_id')->unsigned()->nullable();
+            $table->timestamps();
             //RELATIONS
             $table->foreign('user_id')->references('id')->on('users')
             ->onDelete('cascade')
