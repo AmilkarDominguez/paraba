@@ -13,11 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class TransportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return view('articles.transport');
@@ -35,13 +31,16 @@ class TransportController extends Controller
         ->addColumn('Ruta', function ($item) {
         return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="window.open(\''.$item->link.'\');"><i class="fas fa-route"></i></a>';
         })
+        ->addColumn('QR', function ($item) {
+            return '<a class="btn btn-secondary btn-circle btn-sm text-white '.$item->v.'" onclick="Gen_QR(\''.$item->link.'\')"><i class="fas fa-qrcode"></i></a>';
+        })
         ->addColumn('Editar', function ($item) {
             return '<a class="btn btn-primary btn-circle btn-sm text-white '.$item->v.'" onclick="Edit(\''.$item->id.'\')"><i class="fas fa-pen"></i></a>';
         })
         ->addColumn('Eliminar', function ($item) {
         return '<a class="btn btn-danger btn-circle btn-sm text-white '.$item->v.'" onclick="Delete(\''.$item->id.'\')"><i class="fas fa-trash"></i></a>';
         })
-        ->rawColumns(['Imagen','Ruta','Detalles','Editar','Eliminar'])  
+        ->rawColumns(['Imagen','Ruta','Detalles','QR','Editar','Eliminar'])  
         ->toJson();
     }
     public function store(Request $request)

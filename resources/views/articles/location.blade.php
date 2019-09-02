@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title_dashboard')
-<h1 class="h3 mb-0 text-gray-800">Transportes</h1>
+<h1 class="h3 mb-0 text-gray-800">Sitios turísticos</h1>
 @endsection
 @section('content')
 <div class="d-sm-flex align-items-left justify-content-between mb-4">
@@ -22,11 +22,11 @@
                         <td>Imágen</td>
                         <td>Nombre</td>
                         <td>Descripción</td>
-                        <td>Tipo de Transporte</td>
+                        <td>Coordenadas</td>
+                        <td>Tipo de ubicación</td>
                         <td>Idioma</td>
                         <td>Estado</td>
-                        <td>Ruta</td>
-                        <td>Código QR</td>
+                        <td>Enlace</td>
                         <td>Editar</td>
                         <td>Eliminar</td>
                     </tr>
@@ -61,6 +61,10 @@
                             <div class="md-form mb-3">
                                 <label><b>Descripción:</b></label>
                                 <textarea  type="text" class="form-control rounded" rows="4" id="description" name="description" placeholder="Descripción"></textarea>  
+                            </div>
+                            <div class="md-form mb-3">
+                                <label><b>Coordenadas:</b></label>
+                                <input type="text" class="form-control rounded" id="coordinates" name="coordinates" placeholder="Coordenadas">
                             </div> 
                             <div class="md-form mb-3">
                                 <label><b>Enlace:</b></label>
@@ -128,30 +132,11 @@
         </div>
     </div>
 </div>
-<!-- Modal QR -->
-<div class="modal fade" id="modal_qr" tabindex="-1" role="dialog"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content rounded">
-            <div class="modal-header">
-                <h5 class="modal-title">Código QR</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <div id="qrcode"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger rounded" data-dismiss="modal">CERRAR<i class="icon-cancel"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
+
 @endsection
 @section('scripts')
-<script src="{{ URL::asset('js/scripts/transports.js') }}"></script>
+<script src="{{ URL::asset('js/scripts/locations.js') }}"></script>
 <script>
-title_modal_data="Transportes";
+title_modal_data="Sitios Turisticos";
 </script>
 @endsection

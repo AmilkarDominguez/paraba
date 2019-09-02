@@ -43,4 +43,6 @@ Route::get('location_type', 'CatalogueController@location_type')->name('location
 //
 Route::resource('transports', 'TransportController')->middleware('auth');
 Route::get('transports_datatable', 'TransportController@datatable')->middleware('auth');
+Route::resource('locations', 'LocationController')->middleware('auth');
+Route::get('locations_datatable', 'LocationController@datatable')->middleware('auth');
 

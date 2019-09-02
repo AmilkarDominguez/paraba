@@ -17,7 +17,7 @@ function ListDatatable() {
             "url": "/js/assets/Spanish.json"
         },
         ajax: {
-            url: 'transports_datatable'
+            url: 'locations_datatable'
         },
         columns: [{
                 data: 'Imagen',
@@ -31,7 +31,10 @@ function ListDatatable() {
                 data: 'description'
             },
             {
-                data: 'transport_type.name'
+                data: 'coordinates'
+            },
+            {
+                data: 'location_type.name'
             },
             {
                 data: 'language.name'
@@ -49,12 +52,7 @@ function ListDatatable() {
                 }
             },
             {
-                data: 'Ruta',
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: 'QR',
+                data: 'Enlace',
                 orderable: false,
                 searchable: false
             },
@@ -81,7 +79,7 @@ function ListDatatable() {
                 titleAttr: 'Excel',
                 extend: 'excel',
                 exportOptions: {
-                    columns: [ 1, 2,3,4,5]
+                    columns: [1, 2, 3, 4, 5, 6]
                 }
             },
             {
@@ -90,7 +88,7 @@ function ListDatatable() {
                 titleAttr: 'PDF',
                 extend: 'pdf',
                 exportOptions: {
-                    columns: [1, 2, 3, 4, 5]
+                    columns: [1, 2, 3, 4, 5, 6]
                 }
             },
             {
@@ -100,7 +98,7 @@ function ListDatatable() {
                 extend: 'print',
                 messageTop: '<i class="fas fa-print"></i>',
                 exportOptions: {
-                    columns: [1, 2,3,4,5]
+                    columns: [1, 2, 3, 4, 5, 6]
                 }
             },
             //btn Refresh
@@ -145,18 +143,19 @@ function SelectLanguage() {
 
     });
 }
+
 function SelectType() {
     $.ajax({
         url: "list_catalogue",
         method: 'get',
         data: {
             by: "type_catalogue_id",
-            type_catalogue_id: 6
+            type_catalogue_id: 7
         },
         success: function (result) {
             var code = '<div class="form-group">';
-            code += '<label><b>Tipo de Transporte:</b></label>';
-            code += '<select class="form-control rounded" name="transport_type_id" id="transport_type_id" required>';
+            code += '<label><b>Tipo de locatione:</b></label>';
+            code += '<select class="form-control rounded" name="location_type_id" id="location_type_id" required>';
             code += '<option disabled value="" selected>(Seleccionar)</option>';
             $.each(result, function (key, value) {
                 code += '<option value="' + value.id + '">' + value.name + '</option>';
@@ -180,7 +179,7 @@ function SelectType() {
 function Save() {
     //console.log(catch_parameters());
     $.ajax({
-        url: "transports",
+        url: "locations",
         method: 'post',
         data: catch_parameters(),
         success: function (result) {
@@ -218,7 +217,7 @@ function Save() {
 // captura los datos
 function Edit(id) {
     $.ajax({
-        url: "transports/{transport}/edit",
+        url: "locations/{location}/edit",
         method: 'get',
         data: {
             id: id
@@ -249,10 +248,11 @@ function show_data(obj) {
     id = obj.id;
     $("#name").val(obj.name);
     $("#description").val(obj.description);
+    $("#coordinates").val(obj.coordinates);
     $('#image').attr('src', obj.photo);
     $('#label_image').html(obj.photo);
     $("#link").val(obj.link);
-    $("#transport_type_id").val(obj.transport_type_id);
+    $("#location_type_id").val(obj.location_type_id);
     $("#language_id").val(obj.language_id);
     if (obj.state == "ACTIVO") {
         $('#estado_activo').prop('checked', true);
@@ -271,7 +271,7 @@ function Update() {
     var data_new = catch_parameters();
     if (data_old != data_new) {
         $.ajax({
-            url: "transports/{transport}",
+            url: "locations/{location}",
             method: 'put',
             data: catch_parameters(),
             success: function (result) {
@@ -314,7 +314,7 @@ function Delete(id_) {
 }
 $("#btn_delete").click(function () {
     $.ajax({
-        url: "transports/{transport}",
+        url: "locations/{location}",
         method: 'delete',
         data: {
             id: id
@@ -433,21 +433,4 @@ function ImgPreview(input) {
         }
         reader.readAsDataURL(input.files[0]);
     }
-}
-
-//QR CODE
-function Gen_QR(text){
-    console.log();
-    $('#qrcode').html("");
-    var qrcode = new QRCode(document.getElementById("qrcode"), {
-        colorDark: "#1CC88A",
-        colorLight: "#ffffff",
-        width: 512,        
-        height: 512,
-        text: text,
-        logo: "images/logo.jpg",
-        logoBackgroundColor: '#ffffff',
-        logoBackgroundTransparent: false
-    });
-    $('#modal_qr').modal('show');
 }

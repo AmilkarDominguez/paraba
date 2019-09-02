@@ -4,82 +4,131 @@ namespace App\Http\Controllers;
 
 use App\Location;
 use Illuminate\Http\Request;
+use App\Catalogue;
+use App\User;
+use Yajra\DataTables\DataTables;
+use App\Http\Requests\LocationRequest;
+use Validator;
+use Illuminate\Support\Facades\Storage;
 
 class LocationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        //
+        return view('articles.location');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function datatable(Request $request)
     {
-        //
+        //$isUser = auth()->user()->can(['catalogs.edit', 'catalogs.destroy']);
+        $visibility = "";
+        //if (!$isUser) {$visibility="disabled";}
+        return datatables()->of(Location::where('state','!=','ELIMINADO')->with('location_type','language')->get())
+        ->addColumn('Imagen', function ($item) use ($visibility) {
+            $item->v=$visibility;
+        return '<img src="'.$item->photo.'" alt="image" width="125px" onclick="window.open(\''.$item->photo.'\');"></img>';
+        })
+        ->addColumn('Enlace', function ($item) {
+        return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="window.open(\''.$item->link.'\');"><i class="fas fa-link"></i></a>';
+        })
+        ->addColumn('Editar', function ($item) {
+            return '<a class="btn btn-primary btn-circle btn-sm text-white '.$item->v.'" onclick="Edit(\''.$item->id.'\')"><i class="fas fa-pen"></i></a>';
+        })
+        ->addColumn('Eliminar', function ($item) {
+        return '<a class="btn btn-danger btn-circle btn-sm text-white '.$item->v.'" onclick="Delete(\''.$item->id.'\')"><i class="fas fa-trash"></i></a>';
+        })
+        ->rawColumns(['Imagen','Enlace','Detalles','Editar','Eliminar'])  
+        ->toJson();
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $rule = new LocationRequest();        
+        $validator = Validator::make($request->all(), $rule->rules());
+        if ($validator->fails())
+        {
+            return response()->json(['success'=>false,'msg'=>$validator->errors()->all()]);
+        } 
+        else{
+            $Location = Location::create($request->all());        
+            //IMAGE 
+            if($request->image){
+                $image = $request->image;
+                $this->SaveFile($Location,$request->image, $request->extension_image, '/images/Locations/');
+            }
+            return response()->json(['success'=>true,'msg'=>'Registro existoso.']);
+        }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Location  $location
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Location $location)
+    public function update(Request $request)
     {
-        //
-    }
+        $rule = new LocationRequest();        
+        $validator = Validator::make($request->all(), $rule->rules());
+        if ($validator->fails())
+        {
+            return response()->json(['success'=>false,'msg'=>$validator->errors()->all()]);
+        } 
+        else{
+            $Location = Location::find($request->id);
+            $Location->update($request->all());
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Location  $location
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Location $location)
-    {
-        //
+            if($request->image&&$request->extension_image){
+                //Delete File
+                Storage::disk('public')->delete($Location->photo);
+                $this->SaveFile($Location,$request->image, $request->extension_image, '/images/Locations/');
+            }
+            return response()->json(['success'=>true,'msg'=>'Se actualizo existosamente.']);
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Location  $location
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Location $location)
+    public function SaveFile($obj,$code, $extension_file, $path)
     {
-        //
+        $image = $code;
+        switch ($extension_file) {
+            case 'png':            
+                $image = str_replace('data:image/png;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $imageURL = $path.str_random(10).$obj->id.'.png';
+                Storage::disk('public')->put($imageURL,  base64_decode($image));
+                $obj->photo = $imageURL;
+                $obj->save();
+                return response()->json(['success'=>true,'msg'=>'Registro existoso']);
+                break;
+            case 'jpg':            
+                $image = str_replace('data:image/jpeg;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $imageURL = $path.str_random(10).$obj->id.'.jpg';
+                Storage::disk('public')->put($imageURL,  base64_decode($image));
+                $obj->photo = $imageURL;
+                $obj->save();
+                return response()->json(['success'=>true,'msg'=>'Registro existoso']);
+                break;
+            case 'gif':
+                $image = str_replace('data:image/gif;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $imageURL = $path.str_random(10).$obj->id.'.gif';
+                Storage::disk('public')->put($imageURL,  base64_decode($image));
+                $obj->photo = $imageURL;
+                $obj->save();
+                return response()->json(['success'=>true,'msg'=>'Registro existoso']);
+                break;                                                
+            default:
+                return response()->json(['success'=>false,'msg'=>'Registro existoso, tipo de archivo incompatible.']);
+                break;
+        }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Location  $location
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Location $location)
+    public function destroy(Request $request)
     {
-        //
+        $Location = Location::find($request->id);
+        $Location->state = "ELIMINADO";
+        $Location->update();
+        return response()->json(['success'=>true,'msg'=>'Registro borrado.']);
     }
+    public function show($id)
+    {
+        $Location = Location::find($id);
+        return $Location->toJson();
+    }
+    public function edit(Request $request)
+    {
+        $Location = Location::find($request->id);
+        return $Location->toJson();
+    }  
 }
