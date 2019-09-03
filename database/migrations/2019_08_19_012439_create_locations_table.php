@@ -21,7 +21,8 @@ class CreateLocationsTable extends Migration
             $table->text('description')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
-            $table->string('coordinates')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->unsignedBigInteger('location_type_id')->unsigned()->nullable();
             $table->unsignedBigInteger('language_id')->unsigned()->nullable();
             $table->timestamps();

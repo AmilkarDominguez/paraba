@@ -57,6 +57,11 @@ function ListDatatable() {
                 searchable: false
             },
             {
+                data: 'QR',
+                orderable: false,
+                searchable: false
+            },
+            {
                 data: 'Editar',
                 orderable: false,
                 searchable: false
@@ -248,9 +253,12 @@ function show_data(obj) {
     id = obj.id;
     $("#name").val(obj.name);
     $("#description").val(obj.description);
-    $("#coordinates").val(obj.coordinates);
     $('#image').attr('src', obj.photo);
     $('#label_image').html(obj.photo);
+    $('#lat').val(obj.lat);
+    $('#lng').val(obj.lng);
+    $('#lat_lng').html('Latitud: ' + obj.lat + ' | Longitud: ' + obj.lng);
+    SetMap(obj.lat, obj.lng);
     $("#link").val(obj.link);
     $("#location_type_id").val(obj.location_type_id);
     $("#language_id").val(obj.language_id);
@@ -412,6 +420,7 @@ function ClearInputs() {
     //__Clean values of inputs
     $("#form-data")[0].reset();
     id = 0;
+    SetMap(-21.521699999, -64.742499999);
 };
 
 //Metodos para imagen
@@ -433,4 +442,79 @@ function ImgPreview(input) {
         }
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+//QR CODE
+function Gen_QR(text) {
+    console.log();
+    $('#qrcode').html("");
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        colorDark: "#1CC88A",
+        colorLight: "#ffffff",
+        width: 512,
+        height: 512,
+        text: text,
+        logo: "images/logo.jpg",
+        logoBackgroundColor: '#ffffff',
+        logoBackgroundTransparent: false
+    });
+    $('#modal_qr').modal('show');
+}
+
+//Google Maps Location
+
+// Get element references
+var confirmBtn = document.getElementById('confirmPosition');
+var onClickPositionView = document.getElementById('onClickPositionView');
+var onIdlePositionView = document.getElementById('onIdlePositionView');
+var map = document.getElementById('map');
+
+// Initialize LocationPicker plugin
+var lp = new locationPicker(map, {
+    setCurrentPosition: true, // You can omit this, defaults to true
+    lat: -21.521699999,
+    lng: -64.742499999
+}, {
+    zoom: 15 // You can set any google map options here, zoom defaults to 15
+});
+// Listen to button onclick event
+confirmBtn.onclick = function () {
+    // Get current location and show it in HTML
+    var location = lp.getMarkerPosition();
+    onClickPositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+
+    /*    
+    $('#lat_lng').html(location.lat.toFixed(6));
+    $('#lat').val(location.lat);
+    $('#lng').val(location.lng);*/
+};
+
+// Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+google.maps.event.addListener(lp.map, 'idle', function (event) {
+    // Get current location and show it in HTML
+    var location = lp.getMarkerPosition();
+    $('#lat_lng').html('Latitud: ' + location.lat.toFixed(6) + ' | Longitud: ' + location.lng.toFixed(6));
+    $('#lat').val(location.lat.toFixed(6));
+    $('#lng').val(location.lng.toFixed(6));
+});
+
+
+
+function SetMap(lat, lng) {
+    $('#map').html('');
+    lp = new locationPicker(map, {
+        setCurrentPosition: true,
+        lat: lat,
+        lng: lng
+    }, {
+        zoom: 15
+    });
+
+    google.maps.event.addListener(lp.map, 'idle', function (event) {
+        // Get current location and show it in HTML
+        var location = lp.getMarkerPosition();
+        $('#lat_lng').html('Latitud: ' + location.lat.toFixed(6) + ' | Longitud: ' + location.lng.toFixed(6));
+        $('#lat').val(location.lat.toFixed(6));
+        $('#lng').val(location.lng.toFixed(6));
+    });
 }

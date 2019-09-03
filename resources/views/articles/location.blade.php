@@ -27,6 +27,7 @@
                         <td>Idioma</td>
                         <td>Estado</td>
                         <td>Enlace</td>
+                        <td>Código QR</td>
                         <td>Editar</td>
                         <td>Eliminar</td>
                     </tr>
@@ -50,7 +51,7 @@
             <form class="form-data" id="form-data" novalidate>
                 <div class="modal-body">
                         <div class="modal-body">
-                            <div class="md-form mb-3">
+                            <div class="md-form mb-3">                                
                                 <label><b>Nombre:</b></label>
                                 <input type="text" class="form-control rounded" onkeyup="Mayus(this);" id="name" name="name" placeholder="Nombre"
                                     required>
@@ -62,10 +63,6 @@
                                 <label><b>Descripción:</b></label>
                                 <textarea  type="text" class="form-control rounded" rows="4" id="description" name="description" placeholder="Descripción"></textarea>  
                             </div>
-                            <div class="md-form mb-3">
-                                <label><b>Coordenadas:</b></label>
-                                <input type="text" class="form-control rounded" id="coordinates" name="coordinates" placeholder="Coordenadas">
-                            </div> 
                             <div class="md-form mb-3">
                                 <label><b>Enlace:</b></label>
                                 <input type="text" class="form-control rounded" id="link" name="link" placeholder="Enlace">
@@ -83,6 +80,15 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div> 
+                            <div class="md-form mb-3">
+                                <label><b>Coordenadas:</b></label>
+                                <div id="map" style="width: 100%;height: 400px;"></div>
+                                <a hidden class="btn btn-success rounded" id="confirmPosition">Confirmar coordenadas</a>
+                                <input hidden type="text" id="lat" name="lat" class="form-control rounded" required >
+                                <input hidden type="text" id="lng" name="lng" class="form-control rounded" required>
+                                <br>
+                                <p id="lat_lng"></p>
                             </div>
                             <div class="md-form mb-3" id="select_type"></div>
                             <div class="md-form mb-3" id="select_language"></div>  
@@ -132,10 +138,32 @@
         </div>
     </div>
 </div>
-
+<!-- Modal QR -->
+<div class="modal fade" id="modal_qr" tabindex="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded">
+            <div class="modal-header">
+                <h5 class="modal-title">Código QR</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div id="qrcode"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger rounded" data-dismiss="modal">CERRAR<i class="icon-cancel"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('scripts')
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvz_UKeOLY0eG2D5Gr_kuT9K7xwKAwB6E"></script>
+<script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
 <script src="{{ URL::asset('js/scripts/locations.js') }}"></script>
+<script src="{{ URL::asset('js/scripts/main.js') }}"></script>
 <script>
 title_modal_data="Sitios Turisticos";
 </script>

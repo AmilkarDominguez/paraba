@@ -63,7 +63,7 @@
                                 <textarea  type="text" class="form-control rounded" rows="4" id="description" name="description" placeholder="Descripción"></textarea>  
                             </div> 
                             <div class="md-form mb-3">
-                                <label><b>Enlace:</b></label>
+                                <label><b>Enlace (RUTA):</b></label>
                                 <input type="text" class="form-control rounded" id="link" name="link" placeholder="Enlace">
                             </div> 
                             <div class="md-form mb-3">

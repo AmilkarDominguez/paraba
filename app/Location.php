@@ -8,7 +8,15 @@ class Location extends Model
 {
     protected $fillable =[
         
-        'name','description','coordinates', 'photo','link','location_type_id','language_id', 'state'
+        'name',
+        'description',
+        'lat',
+        'lng',
+        'photo',
+        'link',
+        'location_type_id',
+        'language_id',
+        'state'
     ];
     public function location_type()
     {
