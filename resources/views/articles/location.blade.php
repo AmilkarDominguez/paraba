@@ -16,7 +16,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive p-2">
-            <table id="table" class="table table-striped ">
+            <table id="table" class="table table-striped">
                 <thead>
                     <tr>
                         <td>Imágen</td>
@@ -149,11 +149,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body text-center table-responsive">
                 <div id="qrcode"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger rounded" data-dismiss="modal">CERRAR<i class="icon-cancel"></i></button>
+                <button class="btn btn-danger rounded" data-dismiss="modal">CERRAR</button>
             </div>
         </div>
     </div>
@@ -161,7 +161,7 @@
 @endsection
 @section('scripts')
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvz_UKeOLY0eG2D5Gr_kuT9K7xwKAwB6E"></script>
-<script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+<script src="{{ URL::asset('js/assets/location-picker.min.js') }}"></script>
 <script src="{{ URL::asset('js/scripts/locations.js') }}"></script>
 <script src="{{ URL::asset('js/scripts/main.js') }}"></script>
 <script>

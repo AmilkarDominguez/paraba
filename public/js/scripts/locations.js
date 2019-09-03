@@ -448,6 +448,9 @@ function ImgPreview(input) {
 function Gen_QR(text) {
     console.log();
     $('#qrcode').html("");
+
+
+
     var qrcode = new QRCode(document.getElementById("qrcode"), {
         colorDark: "#1CC88A",
         colorLight: "#ffffff",

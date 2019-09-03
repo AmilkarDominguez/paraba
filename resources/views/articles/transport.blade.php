@@ -139,7 +139,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body text-center table-responsive">
                 <div id="qrcode"></div>
             </div>
             <div class="modal-footer">
