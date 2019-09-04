@@ -219,5 +219,6 @@
   <script src="{{ asset('js/assets/easy.qrcode.js') }}"></script>
 
   @yield('scripts')
+  <script src="{{ URL::asset('js/scripts/main.js') }}"></script>
 </body>
 </html>
