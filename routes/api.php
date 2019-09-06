@@ -19,3 +19,12 @@ use Illuminate\Http\Request;
 
 //Route::get('brand', 'CatalogueController@index');
 
+
+Route::get('app', 'API\ParabaController@app');
+Route::get('screen_transports', 'API\ParabaController@screen_transports')->name('screen_transports');
+Route::get('screen_locations', 'API\ParabaController@screen_locations')->name('screen_locations');
+Route::get('screen_posts', 'API\ParabaController@screen_posts')->name('screen_posts');
+
+Route::get('list_transports', 'API\ParabaController@list_transports')->name('list_transports');
+Route::get('list_locations', 'API\ParabaController@list_locations')->name('list_locations');
+Route::get('list_posts', 'API\ParabaController@list_posts')->name('list_posts');

@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('title_dashboard')
-<h1 class="h3 mb-0 text-gray-800">Transportes</h1>
+<h1 class="h3 mb-0 text-gray-800">Publicaciones</h1>
 @endsection
 @section('content')
 <div class="d-sm-flex align-items-left justify-content-between mb-4">
@@ -20,13 +20,13 @@
                 <thead>
                     <tr>
                         <td>Imágen</td>
-                        <td>Nombre</td>
-                        <td>Descripción</td>
-                        <td>Tipo de Transporte</td>
+                        <td>Título</td>
+                        <td>Contenido</td>
+                        <td>Etiqueta</td>
                         <td>Idioma</td>
                         <td>Estado</td>
-                        <td>Ruta</td>
-                        <td>Enlace</td>
+                        <td>Enlace 1</td>
+                        <td>Enlace 2</td>
                         <td>Código QR</td>
                         <td>Editar</td>
                         <td>Eliminar</td>
@@ -52,24 +52,24 @@
                 <div class="modal-body">
                         <div class="modal-body">
                             <div class="md-form mb-3">
-                                <label><b>Nombre:</b></label>
-                                <input type="text" class="form-control rounded" onkeyup="Mayus(this);" id="name" name="name" placeholder="Nombre"
+                                <label><b>Título:</b></label>
+                                <input type="text" class="form-control rounded" onkeyup="Mayus(this);" id="title" name="title" placeholder="Título"
                                     required>
                                 <div class="invalid-feedback">
                                     Dato necesario.
                                 </div>
                             </div>   
                             <div class="md-form mb-3">
-                                <label><b>Descripción:</b></label>
-                                <textarea  type="text" class="form-control rounded" rows="4" id="description" name="description" placeholder="Descripción"></textarea>  
+                                <label><b>Contenido:</b></label>
+                                <textarea  type="text" class="form-control rounded" rows="4" id="content_" name="content" placeholder="Contenido"></textarea>  
                             </div> 
                             <div class="md-form mb-3">
-                                <label><b>Ruta:</b></label>
-                                <input type="text" class="form-control rounded" id="link" name="link" placeholder="Ruta">
+                                <label><b>Enlace 1:</b></label>
+                                <input type="text" class="form-control rounded" id="link" name="link" placeholder="Enlace 1">
                             </div> 
                             <div class="md-form mb-3">
-                                <label><b>Enlace:</b></label>
-                                <input type="text" class="form-control rounded" id="link2" name="link2" placeholder="Enlace">
+                                <label><b>Enlace 2:</b></label>
+                                <input type="text" class="form-control rounded" id="link2" name="link2" placeholder="Enlace 2">
                             </div> 
                             <div class="md-form mb-3">
                                 <label><b>Imagen:</b></label>
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="md-form mb-3" id="select_type"></div>
+                            <div class="md-form mb-3" id="select_tag"></div>
                             <div class="md-form mb-3" id="select_language"></div>  
                             <div class="md-form mb-3">
                                     <label for="state"><b>Estado:</b></label>
@@ -155,8 +155,8 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{ URL::asset('js/scripts/transports.js') }}"></script>
+<script src="{{ URL::asset('js/scripts/posts.js') }}"></script>
 <script>
-title_modal_data="Transportes";
+title_modal_data="Publicaciones";
 </script>
 @endsection

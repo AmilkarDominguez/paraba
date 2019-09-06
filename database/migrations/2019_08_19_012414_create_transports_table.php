@@ -21,6 +21,7 @@ class CreateTransportsTable extends Migration
             $table->mediumText('description')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
+            $table->text('link2')->nullable();
             $table->unsignedBigInteger('transport_type_id')->unsigned()->nullable();
             $table->unsignedBigInteger('language_id')->unsigned()->nullable();
             $table->timestamps();

@@ -52,6 +52,11 @@ function ListDatatable() {
                 }
             },
             {
+                data: 'Mapa',
+                orderable: false,
+                searchable: false
+            },
+            {
                 data: 'Enlace',
                 orderable: false,
                 searchable: false
@@ -418,6 +423,8 @@ function ClearInputs() {
         form.classList.remove('was-validated');
     });
     //__Clean values of inputs
+    $('#label_image').html("");
+    $('#image').attr('src','');
     $("#form-data")[0].reset();
     id = 0;
     SetMap(-21.521699999, -64.742499999);

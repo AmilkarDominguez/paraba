@@ -34,8 +34,11 @@ class LocationController extends Controller
         ->addColumn('QR', function ($item) {
             return '<a class="btn btn-secondary btn-circle btn-sm text-white '.$item->v.'" onclick="Gen_QR(\''.$item->link.'\')"><i class="fas fa-qrcode"></i></a>';
         })
+        ->addColumn('Mapa', function ($item) {
+        return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="window.open(\''.$item->link.'\');"><i class="fas fa-map-signs"></i></a>';
+        })
         ->addColumn('Enlace', function ($item) {
-        return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="window.open(\''.$item->link.'\');"><i class="fas fa-link"></i></a>';
+            return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="window.open(\''.$item->link2.'\');"><i class="fas fa-link"></i></a>';
         })
         ->addColumn('Editar', function ($item) {
             return '<a class="btn btn-primary btn-circle btn-sm text-white '.$item->v.'" onclick="Edit(\''.$item->id.'\')"><i class="fas fa-pen"></i></a>';
@@ -43,7 +46,7 @@ class LocationController extends Controller
         ->addColumn('Eliminar', function ($item) {
         return '<a class="btn btn-danger btn-circle btn-sm text-white '.$item->v.'" onclick="Delete(\''.$item->id.'\')"><i class="fas fa-trash"></i></a>';
         })
-        ->rawColumns(['Imagen','QR','Enlace','Detalles','Editar','Eliminar'])  
+        ->rawColumns(['Imagen','QR','Mapa','Enlace','Editar','Eliminar'])  
         ->toJson();
     }
     public function store(Request $request)

@@ -30,6 +30,9 @@ class TransportController extends Controller
         })
         ->addColumn('Ruta', function ($item) {
         return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="window.open(\''.$item->link.'\');"><i class="fas fa-route"></i></a>';
+        })        
+        ->addColumn('Enlace', function ($item) {
+            return '<a class="btn btn-info btn-circle btn-sm text-white '.$item->v.'" onclick="window.open(\''.$item->link2.'\');"><i class="fas fa-link"></i></a>';
         })
         ->addColumn('QR', function ($item) {
             return '<a class="btn btn-secondary btn-circle btn-sm text-white '.$item->v.'" onclick="Gen_QR(\''.$item->link.'\')"><i class="fas fa-qrcode"></i></a>';
@@ -40,7 +43,7 @@ class TransportController extends Controller
         ->addColumn('Eliminar', function ($item) {
         return '<a class="btn btn-danger btn-circle btn-sm text-white '.$item->v.'" onclick="Delete(\''.$item->id.'\')"><i class="fas fa-trash"></i></a>';
         })
-        ->rawColumns(['Imagen','Ruta','Detalles','QR','Editar','Eliminar'])  
+        ->rawColumns(['Imagen','Ruta','Enlace','QR','Editar','Eliminar'])  
         ->toJson();
     }
     public function store(Request $request)

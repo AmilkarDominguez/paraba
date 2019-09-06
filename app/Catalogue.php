@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Catalogue extends Model
 {
     protected $fillable = [
-        'name', 'type_catalogue_id', 'description', 'state'
+        'name',
+        'type_catalogue_id',
+        'description',
+        'state'
     ];
     public function transports_for_type()
     {

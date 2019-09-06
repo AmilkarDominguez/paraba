@@ -8,7 +8,14 @@ class Transport extends Model
 {
     protected $fillable =[
         
-        'name','description', 'photo','link','transport_type_id','language_id', 'state'
+        'name',
+        'description',
+        'photo',
+        'link',
+        'link2',
+        'transport_type_id',
+        'language_id',
+        'state'
     ];
     public function transport_type()
     {

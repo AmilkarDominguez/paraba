@@ -26,6 +26,7 @@
                         <td>Tipo de ubicación</td>
                         <td>Idioma</td>
                         <td>Estado</td>
+                        <td>Mapa</td>
                         <td>Enlace</td>
                         <td>Código QR</td>
                         <td>Editar</td>
@@ -64,8 +65,12 @@
                                 <textarea  type="text" class="form-control rounded" rows="4" id="description" name="description" placeholder="Descripción"></textarea>  
                             </div>
                             <div class="md-form mb-3">
+                                <label><b>Mapa:</b></label>
+                                <input type="text" class="form-control rounded" id="link" name="link" placeholder="Mapa">
+                            </div> 
+                            <div class="md-form mb-3">
                                 <label><b>Enlace:</b></label>
-                                <input type="text" class="form-control rounded" id="link" name="link" placeholder="Enlace">
+                                <input type="text" class="form-control rounded" id="link2" name="link2" placeholder="Enlace">
                             </div> 
                             <div class="md-form mb-3">
                                 <label><b>Imagen:</b></label>
@@ -75,7 +80,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="custom-file">
-                                            <input type="file" class="form-control custom-file-input" id="photo" name="photo" lang="es" accept=".png,.jpg,.gif">
+                                            <input type="file" class="form-control custom-file-input" id="photo" name="photo" lang="es" accept=".png,.jpg,.gif" required>
                                             <label id="label_image" class="custom-file-label rounded">Elegir archivo</label>
                                         </div>
                                     </div>

@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->text('content')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
+            $table->text('link2')->nullable();
             $table->unsignedBigInteger('tag_id')->unsigned()->nullable();
             $table->unsignedBigInteger('language_id')->unsigned()->nullable();
             $table->timestamps();

@@ -21,6 +21,7 @@ class CreateNotificationsTable extends Migration
             $table->text('description')->nullable();
             $table->string('photo')->nullable();
             $table->text('link')->nullable();
+            $table->text('link2')->nullable();
             $table->timestamps();
         });
     }

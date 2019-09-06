@@ -14,6 +14,7 @@ class Location extends Model
         'lng',
         'photo',
         'link',
+        'link2',
         'location_type_id',
         'language_id',
         'state'

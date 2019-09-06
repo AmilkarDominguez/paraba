@@ -3,7 +3,7 @@ var id = 0;
 $(document).ready(function () {
     ListDatatable();
     SelectLanguage();
-    SelectType();
+    SelectTag();
     catch_parameters();
 });
 // datatable catalogos
@@ -17,7 +17,7 @@ function ListDatatable() {
             "url": "/js/assets/Spanish.json"
         },
         ajax: {
-            url: 'transports_datatable'
+            url: 'posts_datatable'
         },
         columns: [{
                 data: 'Imagen',
@@ -25,13 +25,13 @@ function ListDatatable() {
                 searchable: false
             },
             {
-                data: 'name'
+                data: 'title'
             },
             {
-                data: 'description'
+                data: 'content'
             },
             {
-                data: 'transport_type.name'
+                data: 'tag.name'
             },
             {
                 data: 'language.name'
@@ -49,12 +49,12 @@ function ListDatatable() {
                 }
             },
             {
-                data: 'Ruta',
+                data: 'Enlace1',
                 orderable: false,
                 searchable: false
             },
             {
-                data: 'Enlace',
+                data: 'Enlace2',
                 orderable: false,
                 searchable: false
             },
@@ -150,18 +150,18 @@ function SelectLanguage() {
 
     });
 }
-function SelectType() {
+function SelectTag() {
     $.ajax({
         url: "list_catalogue",
         method: 'get',
         data: {
             by: "type_catalogue_id",
-            type_catalogue_id: 6
+            type_catalogue_id: 5
         },
         success: function (result) {
             var code = '<div class="form-group">';
-            code += '<label><b>Tipo de Transporte:</b></label>';
-            code += '<select class="form-control rounded" name="transport_type_id" id="transport_type_id" required>';
+            code += '<label><b>Etiqueta:</b></label>';
+            code += '<select class="form-control rounded" name="tag_id" id="tag_id" required>';
             code += '<option disabled value="" selected>(Seleccionar)</option>';
             $.each(result, function (key, value) {
                 code += '<option value="' + value.id + '">' + value.name + '</option>';
@@ -171,7 +171,7 @@ function SelectType() {
             code += 'Dato necesario.';
             code += '</div>';
             code += '</div>';
-            $("#select_type").html(code);
+            $("#select_tag").html(code);
         },
         error: function (result) {
             toastr.error(result.msg + ' CONTACTE A SU PROVEEDOR POR FAVOR.');
@@ -185,7 +185,7 @@ function SelectType() {
 function Save() {
     //console.log(catch_parameters());
     $.ajax({
-        url: "transports",
+        url: "posts",
         method: 'post',
         data: catch_parameters(),
         success: function (result) {
@@ -223,7 +223,7 @@ function Save() {
 // captura los datos
 function Edit(id) {
     $.ajax({
-        url: "transports/{transport}/edit",
+        url: "posts/{post}/edit",
         method: 'get',
         data: {
             id: id
@@ -251,14 +251,15 @@ var data_old;
 function show_data(obj) {
     ClearInputs();
     obj = JSON.parse(obj);
+    //console.log(obj);
     id = obj.id;
-    $("#name").val(obj.name);
-    $("#description").val(obj.description);
+    $("#title").val(obj.title);
+    $("#content_").val(obj.content);
     $('#image').attr('src', obj.photo);
     $('#label_image').html(obj.photo);
     $("#link").val(obj.link);
     $("#link2").val(obj.link2);
-    $("#transport_type_id").val(obj.transport_type_id);
+    $("#tag_id").val(obj.tag_id);
     $("#language_id").val(obj.language_id);
     if (obj.state == "ACTIVO") {
         $('#estado_activo').prop('checked', true);
@@ -277,7 +278,7 @@ function Update() {
     var data_new = catch_parameters();
     if (data_old != data_new) {
         $.ajax({
-            url: "transports/{transport}",
+            url: "posts/{post}",
             method: 'put',
             data: catch_parameters(),
             success: function (result) {
@@ -320,7 +321,7 @@ function Delete(id_) {
 }
 $("#btn_delete").click(function () {
     $.ajax({
-        url: "transports/{transport}",
+        url: "posts/{post}",
         method: 'delete',
         data: {
             id: id
@@ -359,6 +360,7 @@ $("#btn_delete").click(function () {
 });
 
 //////////////////////////////////////////////
+
 // METODOS NECESARIOS
 // funcion para volver mayusculas
 function Mayus(e) {

@@ -26,7 +26,7 @@
     <!-- Sidebar -->
     <ul class="navbar-nav bg-success sidebar sidebar-dark accordion toggled" id="accordionSidebar">
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-tachometer-alt"></i>
         </div>
@@ -90,7 +90,9 @@
             <h6 class="collapse-header">Árticulos:</h6>
             <a class="collapse-item" href="{{ route('transports.index') }}">Transporte</a>
             <a class="collapse-item" href="{{ route('locations.index') }}">Sitios Turitisticos</a>
-            <a class="collapse-item" href="#">Anuncios</a>
+            <a class="collapse-item" href="{{ route('posts.index') }}">Publicaciones</a>
+            <a class="collapse-item" href="{{ route('notifications.index') }}">Notificaciones</a>
+            <a class="collapse-item" href="{{ route('posts.index') }}">Comentarios</a>
           </div>
         </div>
       </li>

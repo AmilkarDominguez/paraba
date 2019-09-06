@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class TypeCatalogue extends Model
 {
     protected $fillable =[
-        'name', 'description', 'state',
+        'name',
+        'description',
+        'state',
     ];
 
     public function catalogues()

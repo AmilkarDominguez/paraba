@@ -2,8 +2,6 @@ var table;
 var id = 0;
 $(document).ready(function () {
     ListDatatable();
-    SelectLanguage();
-    SelectType();
     catch_parameters();
 });
 // datatable catalogos
@@ -17,7 +15,7 @@ function ListDatatable() {
             "url": "/js/assets/Spanish.json"
         },
         ajax: {
-            url: 'transports_datatable'
+            url: 'notifications_datatable'
         },
         columns: [{
                 data: 'Imagen',
@@ -29,12 +27,6 @@ function ListDatatable() {
             },
             {
                 data: 'description'
-            },
-            {
-                data: 'transport_type.name'
-            },
-            {
-                data: 'language.name'
             },
             {
                 data: 'state',
@@ -49,22 +41,12 @@ function ListDatatable() {
                 }
             },
             {
-                data: 'Ruta',
+                data: 'Enlace1',
                 orderable: false,
                 searchable: false
             },
             {
-                data: 'Enlace',
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: 'QR',
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: 'Editar',
+                data: 'Enlace2',
                 orderable: false,
                 searchable: false
             },
@@ -86,7 +68,7 @@ function ListDatatable() {
                 titleAttr: 'Excel',
                 extend: 'excel',
                 exportOptions: {
-                    columns: [ 1, 2,3,4,5]
+                    columns: [1, 2, 3, 4, 5]
                 }
             },
             {
@@ -105,7 +87,7 @@ function ListDatatable() {
                 extend: 'print',
                 messageTop: '<i class="fas fa-print"></i>',
                 exportOptions: {
-                    columns: [1, 2,3,4,5]
+                    columns: [1, 2, 3, 4, 5]
                 }
             },
             //btn Refresh
@@ -150,42 +132,12 @@ function SelectLanguage() {
 
     });
 }
-function SelectType() {
-    $.ajax({
-        url: "list_catalogue",
-        method: 'get',
-        data: {
-            by: "type_catalogue_id",
-            type_catalogue_id: 6
-        },
-        success: function (result) {
-            var code = '<div class="form-group">';
-            code += '<label><b>Tipo de Transporte:</b></label>';
-            code += '<select class="form-control rounded" name="transport_type_id" id="transport_type_id" required>';
-            code += '<option disabled value="" selected>(Seleccionar)</option>';
-            $.each(result, function (key, value) {
-                code += '<option value="' + value.id + '">' + value.name + '</option>';
-            });
-            code += '</select>';
-            code += '<div class="invalid-feedback">';
-            code += 'Dato necesario.';
-            code += '</div>';
-            code += '</div>';
-            $("#select_type").html(code);
-        },
-        error: function (result) {
-            toastr.error(result.msg + ' CONTACTE A SU PROVEEDOR POR FAVOR.');
-            //console.log(result);
-        },
-
-    });
-}
 
 // guarda los datos nuevos
 function Save() {
     //console.log(catch_parameters());
     $.ajax({
-        url: "transports",
+        url: "notifications",
         method: 'post',
         data: catch_parameters(),
         success: function (result) {
@@ -223,7 +175,7 @@ function Save() {
 // captura los datos
 function Edit(id) {
     $.ajax({
-        url: "transports/{transport}/edit",
+        url: "posts/{notification}/edit",
         method: 'get',
         data: {
             id: id
@@ -251,15 +203,15 @@ var data_old;
 function show_data(obj) {
     ClearInputs();
     obj = JSON.parse(obj);
+    //console.log(obj);
     id = obj.id;
-    $("#name").val(obj.name);
+    $("#name").val(obj.title);
     $("#description").val(obj.description);
     $('#image').attr('src', obj.photo);
     $('#label_image').html(obj.photo);
     $("#link").val(obj.link);
     $("#link2").val(obj.link2);
-    $("#transport_type_id").val(obj.transport_type_id);
-    $("#language_id").val(obj.language_id);
+    $("#tag_id").val(obj.tag_id);
     if (obj.state == "ACTIVO") {
         $('#estado_activo').prop('checked', true);
     }
@@ -277,7 +229,7 @@ function Update() {
     var data_new = catch_parameters();
     if (data_old != data_new) {
         $.ajax({
-            url: "transports/{transport}",
+            url: "notifications/{notification}",
             method: 'put',
             data: catch_parameters(),
             success: function (result) {
@@ -320,7 +272,7 @@ function Delete(id_) {
 }
 $("#btn_delete").click(function () {
     $.ajax({
-        url: "transports/{transport}",
+        url: "notifications/{notification}",
         method: 'delete',
         data: {
             id: id
@@ -359,6 +311,7 @@ $("#btn_delete").click(function () {
 });
 
 //////////////////////////////////////////////
+
 // METODOS NECESARIOS
 // funcion para volver mayusculas
 function Mayus(e) {
@@ -416,7 +369,7 @@ function ClearInputs() {
     });
     //__Clean values of inputs
     $('#label_image').html("");
-    $('#image').attr('src','');
+    $('#image').attr('src', '');
     $("#form-data")[0].reset();
     id = 0;
 };
@@ -443,13 +396,13 @@ function ImgPreview(input) {
 }
 
 //QR CODE
-function Gen_QR(text){
+function Gen_QR(text) {
     console.log();
     $('#qrcode').html("");
     var qrcode = new QRCode(document.getElementById("qrcode"), {
         colorDark: "#1CC88A",
         colorLight: "#ffffff",
-        width: 512,        
+        width: 512,
         height: 512,
         text: text,
         logo: "images/logo.jpg",

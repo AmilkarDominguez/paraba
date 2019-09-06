@@ -17,7 +17,8 @@ class CreateTrackingUsersTable extends Migration
             $table->bigIncrements('id');
             $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             //CUSTOM
-            $table->text('coordinates')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->unsignedBigInteger('user_id')->unsigned()->nullable();
             $table->timestamps();
             //RELATIONS

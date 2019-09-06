@@ -13,7 +13,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 //Auth
@@ -45,4 +45,8 @@ Route::resource('transports', 'TransportController')->middleware('auth');
 Route::get('transports_datatable', 'TransportController@datatable')->middleware('auth');
 Route::resource('locations', 'LocationController')->middleware('auth');
 Route::get('locations_datatable', 'LocationController@datatable')->middleware('auth');
+Route::resource('posts', 'PostController')->middleware('auth');
+Route::get('posts_datatable', 'PostController@datatable')->middleware('auth');
+Route::resource('notifications', 'NotificationController')->middleware('auth');
+Route::get('notifications_datatable', 'NotificationController@datatable')->middleware('auth');
 
