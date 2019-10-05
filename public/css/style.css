@@ -13,3 +13,17 @@
     margin: 1%;
     border-radius: 25px !important;
 }
+
+footer {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+    position: fixed;
+    bottom: 0;
+    /*margin-top: 20rem;
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;*/
+}
+.container-fluid{
+    margin-bottom: 150px;
+}
