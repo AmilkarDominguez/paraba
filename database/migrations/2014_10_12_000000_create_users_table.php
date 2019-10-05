@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             //CUSTOM
             $table->enum('gender', ['MASCULINO', 'FEMENINO'])->default('MASCULINO');
             $table->string('photo')->nullable();
+            $table->string('nro_document')->nullable();
             $table->unsignedBigInteger('country_id')->unsigned()->nullable();
             $table->unsignedBigInteger('document_type_id')->unsigned()->nullable();
             $table->unsignedBigInteger('occupation_id')->unsigned()->nullable();

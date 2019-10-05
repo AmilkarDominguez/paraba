@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/sb-admin-2.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
+
 
   <!-- Custom Style by Amilkar -->
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -31,7 +31,6 @@
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
   <script src="{{ asset('js/sb-admin-2.js') }}"></script>
-  <!--Alert-->
-  <script src="{{ asset('js/assets/toastr.js') }}"></script>
+
 </body>
 </html>

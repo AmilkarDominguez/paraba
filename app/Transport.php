@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transport extends Model
 {
-    protected $fillable =[
-        
+    protected $fillable =[        
         'name',
         'description',
         'photo',

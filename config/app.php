@@ -175,10 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         //Datatable 
-        Yajra\DataTables\DataTablesServiceProvider::class,
-        //shinobi
-        //Caffeinated\Shinobi\ShinobiServiceProvider::class,
-
+        Yajra\DataTables\DataTablesServiceProvider::class
     ],
 
     /*
