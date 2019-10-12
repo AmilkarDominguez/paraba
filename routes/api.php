@@ -28,3 +28,17 @@ Route::get('screen_posts', 'API\ParabaController@screen_posts')->name('screen_po
 Route::get('list_transports', 'API\ParabaController@list_transports')->name('list_transports');
 Route::get('list_locations', 'API\ParabaController@list_locations')->name('list_locations');
 Route::get('list_posts', 'API\ParabaController@list_posts')->name('list_posts');
+
+///API Authentication
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', 'API\Auth\AuthController@login')->name('login');
+    Route::post('register', 'API\Auth\AuthController@register');
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('logout', 'API\Auth\AuthController@logout');
+        Route::get('user', 'API\Auth\AuthController@user');
+    });
+});
