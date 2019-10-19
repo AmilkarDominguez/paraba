@@ -26,6 +26,8 @@ class CatalogueController extends Controller
     }
     public function datatable(Request $request)
     {
+        
+    
         //$isUser = auth()->user()->can(['catalogs.edit', 'catalogs.destroy']);
         $visibility = "";
         //if (!$isUser) {$visibility="disabled";}
@@ -90,8 +92,9 @@ class CatalogueController extends Controller
     }
 
     // Return Views
-    public function country()
+    public function country(Request $request)
     {
+        $request->user()->authorizeRol('ADMINISTRADOR');
         return view('catalogues.country');
     }
     public function document_type()

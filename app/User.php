@@ -19,6 +19,7 @@ class User extends Authenticatable
         'state',
         'gender',
         'photo',
+        'role_id',
         'nro_document',
         'country_id',
         'document_type_id',
@@ -37,5 +38,29 @@ class User extends Authenticatable
     public function batches()
     {
         return $this->hasMany(Batch::class);
+    }
+    public function roles()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function authorizeRol($roles) {
+        if($this->hasAnyRole($roles)) {
+            return true;
+        }
+        abort(401, 'Acción no Autorizada.');
+    }
+    public function hasAnyRole($roles) {
+        if($this->hasRole($roles)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasRole($role) {
+        if($this->roles()->where('name', $role)->first()) {
+            return true;
+        }
+        return false;
     }
 }
