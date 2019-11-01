@@ -19,7 +19,6 @@ class User extends Authenticatable
         'state',
         'gender',
         'photo',
-        'role_id',
         'nro_document',
         'country_id',
         'document_type_id',
@@ -41,22 +40,28 @@ class User extends Authenticatable
     }
     public function roles()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class);
     }
 
     public function authorizeRol($roles) {
-        if($this->hasAnyRole($roles)) {
-            return true;
-        }
-        abort(401, 'Acción no Autorizada.');
+        abort_unless($this->hasAnyRole($roles), 401);
+        return true;
+        
     }
-    public function hasAnyRole($roles) {
-        if($this->hasRole($roles)) {
-            return true;
+    public function hasAnyRole($roles){
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->hasRole($role)) {
+                    return true;
+                }
+            }
+        } else {
+            if ($this->hasRole($roles)) {
+                 return true; 
+            }   
         }
         return false;
     }
-
     public function hasRole($role) {
         if($this->roles()->where('name', $role)->first()) {
             return true;

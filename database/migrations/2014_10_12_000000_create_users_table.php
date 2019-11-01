@@ -15,9 +15,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->string('name', 128);
             $table->string('email')->unique();
+            $table->enum('state', ['ACTIVO', 'INACTIVO','ELIMINADO'])->default('ACTIVO');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -26,15 +26,11 @@ class CreateUsersTable extends Migration
             $table->enum('gender', ['MASCULINO', 'FEMENINO'])->default('MASCULINO');
             $table->string('photo')->nullable();
             $table->string('nro_document')->nullable();
-            $table->unsignedBigInteger('role_id')->unsigned()->nullable();
             $table->unsignedBigInteger('country_id')->unsigned()->nullable();
             $table->unsignedBigInteger('document_type_id')->unsigned()->nullable();
             $table->unsignedBigInteger('occupation_id')->unsigned()->nullable();
             $table->unsignedBigInteger('language_id')->unsigned()->nullable();
             //RELATIONS
-            $table->foreign('role_id')->references('id')->on('roles')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
             $table->foreign('country_id')->references('id')->on('catalogues')
             ->onDelete('cascade')
             ->onUpdate('cascade');

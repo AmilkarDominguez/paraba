@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {    
-        App\Role::create([
+        $rol_admin = App\Role::create([
             'name' => 'ADMINISTRADOR',
             'description' => 'Rol Administrador.'
         ]);
@@ -24,10 +24,11 @@ class UsersTableSeeder extends Seeder
             'name' => 'admin',
             'email'=> 'admin@admin.com',
             'state' => 'ACTIVO',
-            'role_id' => 1,
             'email_verified_at' => now(),
             'password' => bcrypt('admin'),
-            'remember_token' => str_random(10)            
+            'remember_token' => str_random(10), 
+                  
         ]);
+        $Admin->roles()->attach($rol_admin); 
     }
 }
