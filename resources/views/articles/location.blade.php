@@ -165,7 +165,7 @@
 </div>
 @endsection
 @section('scripts')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvz_UKeOLY0eG2D5Gr_kuT9K7xwKAwB6E"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAST5lYCyzU7kQMJ_avoWrnVD0coVxBM6c"></script>
 <script src="{{ URL::asset('js/assets/location-picker.min.js') }}"></script>
 <script src="{{ URL::asset('js/scripts/locations.js') }}"></script>
 
